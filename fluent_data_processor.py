@@ -219,7 +219,7 @@ from pyspark.sql.functions import *
   }
 )
 def customer_sales():
-  customer_df = dlt.read("customer_silver")
-  sales_df = dlt.read("sales_txn_silver")
-  joined_df = customer_df.join(sales_df, customer_df.customer_id == sales_df.customer_id, "inner")
+  customer_df = dlt.read("customer_silver").drop("_rescued_data")
+  sales_df = dlt.read("sales_txn_silver").drop("_rescued_data")
+  joined_df = customer_df.join(sales_df, "customer_id", "inner")
   return joined_df
